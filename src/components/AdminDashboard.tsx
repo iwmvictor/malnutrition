@@ -5,12 +5,14 @@ import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/tools/translations';
 import { clsx } from 'clsx';
 import { Navbar } from './Navbar';
+import { IUser } from '../types';
 
 interface AdminDashboardProps {
   adminLevel: 'cell' | 'sector' | 'district' | 'province' | 'ministry';
+  user: IUser;
 }
 
-export function AdminDashboard({ adminLevel }: AdminDashboardProps) {
+export function AdminDashboard({ adminLevel, user }: AdminDashboardProps) {
   const { state } = useApp();
   const { t } = useTranslation(state.language);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -208,7 +210,7 @@ export function AdminDashboard({ adminLevel }: AdminDashboardProps) {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-              <Navbar />
+              <Navbar user={user}/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

@@ -8,10 +8,10 @@ import ErrorPage from "../../pages/ErrorPage";
 import NotFound from "../../pages/NotFound";
 import {  useEffect, useState } from "react";
 import LoginForm from "../../components/LoginForm";
-import { User } from "../../types";
+import { IUser } from "../../types";
 
 const RoutesProvider = () => {
- const [userProfile, setUserProfile] = useState<User | undefined>();
+ const [userProfile, setUserProfile] = useState<IUser | undefined>();
 
     useEffect(() => {
       const storedUserData = localStorage.getItem("userData");
@@ -20,6 +20,8 @@ const RoutesProvider = () => {
         if (JSON.stringify(parsedData) !== JSON.stringify(userProfile)) {
           setUserProfile(parsedData);
         }
+      } else if (userProfile) {
+        setUserProfile(undefined);
       }
     }, [userProfile]);
 
@@ -28,19 +30,19 @@ const RoutesProvider = () => {
 
     switch (userProfile.roles[0]) {
       case "PARENT":
-        return <ParentDashboard />;
+        return <ParentDashboard user={userProfile}/>;
       case "VILLAGE":
-        return <HealthAdvisorDashboard />;
+        return <HealthAdvisorDashboard user={userProfile}/>;
       case "CELL":
-        return <AdminDashboard adminLevel="cell" />;
+        return <AdminDashboard adminLevel="cell" user={userProfile} />;
       case "SECTOR":
-        return <AdminDashboard adminLevel="sector" />;
+        return <AdminDashboard adminLevel="sector" user={userProfile}/>;
       case "DISTRICT":
-        return <AdminDashboard adminLevel="district" />;
+        return <AdminDashboard adminLevel="district" user={userProfile}/>;
       case "MINISTRY":
-        return <AdminDashboard adminLevel="ministry" />;
+        return <AdminDashboard adminLevel="ministry" user={userProfile}/>;
       default:
-        return <ParentDashboard />;
+        return <ParentDashboard user={userProfile}/>;
     }
   };
 

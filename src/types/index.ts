@@ -58,7 +58,7 @@ export interface Address {
   village: string;
 }
 
-export interface User {
+export interface IUser {
   token: string;
   firstName: string;
   lastName: string;

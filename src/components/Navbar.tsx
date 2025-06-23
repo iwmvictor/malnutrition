@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Bell, Globe, Moon, Sun, User, LogOut, Menu, X } from "lucide-react";
 import { useApp } from "../context/AppContext";
 import { useTranslation } from "../utils/tools/translations";
-import { Language } from "../types";
+import { Language, IUser } from "../types";
+interface NavbarDashboardProps {
+  user: IUser
+}
 
-export function Navbar() {
+export function Navbar({user} : NavbarDashboardProps) {
   const { state, dispatch } = useApp();
   const { t } = useTranslation(state.language);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -23,9 +26,11 @@ export function Navbar() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("userData");
     dispatch({ type: "SET_USER", payload: null });
     dispatch({ type: "SET_AUTHENTICATED", payload: false });
     dispatch({ type: "SET_CURRENT_PARENT", payload: null });
+    window.location.href = "/auth/login";
   };
 
   const unreadCount = state.notifications.filter((n) => !n.read).length;
@@ -37,7 +42,7 @@ export function Navbar() {
         "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
       village_admin:
         "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-      ministry_admin:
+      MINISTRY:
         "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
     };
     return (
@@ -164,13 +169,13 @@ export function Navbar() {
             </div>
 
             {/* User Role Tag */}
-            {state.user && (
+            {user && (
               <span
                 className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getRoleColor(
-                  state.user.role
+                  user.roles[0]
                 )}`}
               >
-                {state.user.role.replace("_", " ").toUpperCase()}
+                {user.roles[0].replace("_", " ").toUpperCase()}
               </span>
             )}
 
@@ -180,7 +185,7 @@ export function Navbar() {
                 <User className="w-4 h-4 text-gray-600 dark:text-gray-300" />
               </div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {state.user?.firstName} {state.user?.lastName}
+                {user?.firstName} {user?.lastName}
               </span>
               <button
                 onClick={handleLogout}
@@ -212,7 +217,7 @@ export function Navbar() {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <div className="flex items-center justify-between py-2">
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {state.user?.firstName} {state.user?.lastName}
+                  {user?.firstName} {user?.lastName}
                 </span>
                 <button
                   onClick={handleLogout}

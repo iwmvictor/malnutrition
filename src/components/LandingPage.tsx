@@ -2,7 +2,6 @@ import { Globe, ArrowRight, Shield, Users, TrendingUp, Award, LucideMoon, Lucide
 import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/tools/translations';
 import { Language } from '../types';
-import { useEffect } from 'react';
 
 export function LandingPage() {
   const { state, dispatch } = useApp();
