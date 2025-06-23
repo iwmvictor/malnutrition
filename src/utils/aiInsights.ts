@@ -1,4 +1,5 @@
-import { Measurement, Child, AIInsight } from '../types';
+// import { Measurement, Child, AIInsight } from '../types';
+import {  Child, AIInsight } from '../types';
 
 export function calculateBMI(weight: number, height: number): number {
   const heightInMeters = height / 100;
@@ -9,8 +10,8 @@ export function getStunting(height: number, ageInMonths: number, gender: 'male' 
   // Simplified WHO Z-score calculation for stunting
   // In production, this would use proper WHO growth standards tables
   const expectedHeight = gender === 'male' ? 
-    (ageInMonths * 0.65 + 50) : // Simplified male growth curve
-    (ageInMonths * 0.63 + 49);  // Simplified female growth curve
+    (ageInMonths * 0.65 + 50) :
+    (ageInMonths * 0.63 + 49); 
   
   const zScore = (height - expectedHeight) / (expectedHeight * 0.15);
   
