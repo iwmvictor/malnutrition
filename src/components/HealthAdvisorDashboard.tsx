@@ -27,7 +27,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useApp } from "../context/AppContext";
-import { useTranslation } from "../utils/translations";
+import { useTranslation } from "../utils/tools/translations";
 import { clsx } from "clsx";
 
 export function HealthAdvisorDashboard() {

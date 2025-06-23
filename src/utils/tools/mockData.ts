@@ -1,4 +1,4 @@
-import { Child, Parent, User, Notification } from '../types';
+import { Child, Parent, User, Notification } from '../../types';
 // import { Child, Parent, User, Notification, Measurement } from '../types';
 
 export const mockChildren: Child[] = [
@@ -121,8 +121,8 @@ export const mockHealthAdvisor: User = {
 export const mockCellAdmin: User = {
   id: '3',
   firstName: 'Paul',
-  lastName: 'Kagame',
-  email: 'paul.kagame@admin.gov.rw',
+  lastName: 'karake',
+  email: 'karake@admin.gov.rw',
   role: 'cell_admin',
   assignedArea: {
     province: 'Eastern Province',

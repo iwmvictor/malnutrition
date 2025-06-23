@@ -1,5 +1,5 @@
 // import { Measurement, Child, AIInsight } from '../types';
-import {  Child, AIInsight } from '../types';
+import {  Child, AIInsight } from '../../types';
 
 export function calculateBMI(weight: number, height: number): number {
   const heightInMeters = height / 100;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bell, Globe, Moon, Sun, User, LogOut, Menu, X } from "lucide-react";
 import { useApp } from "../context/AppContext";
-import { useTranslation } from "../utils/translations";
+import { useTranslation } from "../utils/tools/translations";
 import { Language } from "../types";
 
 export function Navbar() {

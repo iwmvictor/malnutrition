@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { User, Calendar, Ruler, Weight, Activity, AlertTriangle, CheckCircle, Plus } from 'lucide-react';
 import { Child } from '../types';
 import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
-import { calculateAgeInMonths, getAiInsight, generateNutritionTip } from '../utils/aiInsights';
+import { useTranslation } from '../utils/tools/translations';
+import { calculateAgeInMonths, getAiInsight, generateNutritionTip } from '../utils/tools/aiInsights';
 import { clsx } from 'clsx';
 
 interface ChildCardProps {

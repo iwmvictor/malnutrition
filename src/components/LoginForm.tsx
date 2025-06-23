@@ -1,16 +1,12 @@
 import  { useState } from 'react';
 import { ChevronLeft, ChevronRight, User, MapPin, Baby, Ruler, CheckCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
-import { rwandaLocations } from '../utils/mockData';
+import { useTranslation } from '../utils/tools/translations';
+import { rwandaLocations } from '../utils/tools/mockData';
 import { Parent, Child, Measurement, Address } from '../types';
 
-interface RegistrationFormProps {
-  onComplete: (parent: Parent) => void;
-  onBack: () => void;
-}
 
-export function RegistrationForm({ onComplete, onBack }: RegistrationFormProps) {
+export function LoginForm() {
   const { state } = useApp();
   const { t } = useTranslation(state.language);
   const [currentStep, setCurrentStep] = useState(1);
@@ -115,7 +111,7 @@ export function RegistrationForm({ onComplete, onBack }: RegistrationFormProps) 
         gender: childData.gender,
         measurements: [measurement],
         lastMeasurement: measurement,
-        riskLevel: 'normal', // Will be calculated by AI
+        riskLevel: 'normal',
       };
     });
 

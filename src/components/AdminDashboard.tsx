@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Users, AlertTriangle, TrendingUp, Activity, Filter, Download, Search, Bell, MapPin, Calendar, BarChart3, PieChart as PieChartIcon } from 'lucide-react';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
+import { useTranslation } from '../utils/tools/translations';
 import { clsx } from 'clsx';
 
 interface AdminDashboardProps {

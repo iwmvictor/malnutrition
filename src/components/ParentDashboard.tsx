@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Plus, TrendingUp, Users, AlertCircle, Heart, Target } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
+import { useTranslation } from '../utils/tools/translations';
 import { ChildCard } from './ChildCard';
 import { Child } from '../types';
-import { generateNutritionTip, getOverallRiskLevel } from '../utils/aiInsights';
+import { generateNutritionTip, getOverallRiskLevel } from '../utils/tools/aiInsights';
 
 export function ParentDashboard() {
   const { state } = useApp();

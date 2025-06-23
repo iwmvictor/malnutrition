@@ -1,16 +1,19 @@
 import { Globe, ArrowRight, Shield, Users, TrendingUp, Award, LucideMoon, LucideSun } from 'lucide-react';
 import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
+import { useTranslation } from '../utils/tools/translations';
 import { Language } from '../types';
+import { LoginForm } from './LoginForm';
+import { useState } from 'react';
 
-interface LandingPageProps {
-  onGetStarted: () => void;
-}
-
-export function LandingPage({ onGetStarted }: LandingPageProps) {
+type AppView = 'landing' | 'registration' | 'dashboard';
+export function LandingPage() {
   const { state, dispatch } = useApp();
   const { t } = useTranslation(state.language);
+   const [currentView, setCurrentView] = useState<AppView>('landing');
 
+  const handleGetStarted = () => {
+    setCurrentView('registration');
+  };
   const handleLanguageChange = (language: Language) => {
     dispatch({ type: 'SET_LANGUAGE', payload: language });
   };
@@ -95,7 +98,9 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
           </div>
         </div>
       </header>
-
+      {currentView === 'registration' && (
+        <LoginForm  />
+      )}
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -108,7 +113,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <button
-                onClick={onGetStarted}
+                onClick={handleGetStarted}
                 className="inline-flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-green-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 <span className="text-lg">{t('startTracking')}</span>
@@ -181,26 +186,6 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-green-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            Join thousands of families already using Buzima App
-          </h2>
-          <p className="text-xl text-blue-100 mb-10">
-            Start tracking your child's nutrition today and get AI-powered insights 
-            to ensure healthy growth and development.
-          </p>
-          <button
-            onClick={onGetStarted}
-            className="inline-flex items-center space-x-2 px-10 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-lg"
-          >
-            <span className="text-lg">{t('startTracking')}</span>
-            <ArrowRight className="w-5 h-5" />
-          </button>
         </div>
       </section>
 
