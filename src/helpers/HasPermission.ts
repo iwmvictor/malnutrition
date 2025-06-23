@@ -1,6 +1,6 @@
-import { AuthContext } from "@/contexts/Auth";
 import { Permission } from "../constants/permissions";
 import { useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
 type ExtendedPermission = Permission | "MINISTRY" | "DISTRICT" | "SECTOR" | "CELL" | "VILLAGE" | "PARENT";
 

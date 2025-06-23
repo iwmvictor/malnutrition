@@ -1,6 +1,7 @@
-import { AuthContext } from "@/contexts/Auth";
+
 import { Permission } from "../constants/permissions";
 import { useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
 export const HasPermissions = (permissions: Permission[]) => {
   const authCtx = useContext(AuthContext);

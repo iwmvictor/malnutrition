@@ -1,6 +1,6 @@
-import { AuthContext } from "@/contexts/Auth";
 import { PermissionGroup } from "../constants/permissions";
 import { useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
 export const HasPermissionGroup = (
   requiredGroup: PermissionGroup,
