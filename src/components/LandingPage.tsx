@@ -1,5 +1,4 @@
-import React from 'react';
-import { Globe, ArrowRight, Shield, Users, TrendingUp, Award } from 'lucide-react';
+import { Globe, ArrowRight, Shield, Users, TrendingUp, Award, LucideMoon, LucideSun } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/translations';
 import { Language } from '../types';
@@ -63,7 +62,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 <span className="text-white font-bold text-lg">BA</span>
               </div>
               <span className="ml-3 text-2xl font-bold text-gray-900 dark:text-white">
-                Buzima AI
+                Buzima App
               </span>
             </div>
             
@@ -90,7 +89,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 onClick={handleThemeToggle}
                 className="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                {state.theme === 'light' ? '🌙' : '☀️'}
+                {state.theme === 'light' ? <LucideMoon/> : <LucideSun/>}
               </button>
             </div>
           </div>
@@ -189,7 +188,7 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-green-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            Join thousands of families already using Buzima AI
+            Join thousands of families already using Buzima App
           </h2>
           <p className="text-xl text-blue-100 mb-10">
             Start tracking your child's nutrition today and get AI-powered insights 
@@ -214,11 +213,11 @@ export function LandingPage({ onGetStarted }: LandingPageProps) {
                 <span className="text-white font-bold text-sm">BA</span>
               </div>
               <span className="ml-2 text-xl font-bold text-white">
-                Buzima AI
+                Buzima App
               </span>
             </div>
             <p className="text-gray-400 text-center md:text-right">
-              © 2024 Buzima AI. Empowering healthier communities through technology.
+              © 2025 Buzima App. Empowering healthier communities through technology.
             </p>
           </div>
         </div>

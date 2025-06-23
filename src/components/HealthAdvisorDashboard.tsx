@@ -1,16 +1,41 @@
-import React, { useState } from 'react';
-import { Users, AlertTriangle, TrendingUp, Activity, Filter, Download, Search, Bell, MapPin, Calendar } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { useApp } from '../context/AppContext';
-import { useTranslation } from '../utils/translations';
-import { clsx } from 'clsx';
+import { useState } from "react";
+import {
+  Users,
+  AlertTriangle,
+  TrendgUp,
+  Activity,
+  Filter,
+  Download,
+  Search,
+  Bell,
+  MapPin,
+  Calendar,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import { useApp } from "../context/AppContext";
+import { useTranslation } from "../utils/translations";
+import { clsx } from "clsx";
 
 export function HealthAdvisorDashboard() {
   const { state } = useApp();
   const { t } = useTranslation(state.language);
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [dateRange, setDateRange] = useState('30days');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [dateRange, setDateRange] = useState("30days");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Mock data for health advisor's assigned area
   const areaStats = {
@@ -23,133 +48,162 @@ export function HealthAdvisorDashboard() {
   };
 
   const growthTrendData = [
-    { month: 'Jan', normal: 65, moderate: 15, severe: 9 },
-    { month: 'Feb', normal: 68, moderate: 13, severe: 8 },
-    { month: 'Mar', normal: 71, moderate: 12, severe: 6 },
-    { month: 'Apr', normal: 74, moderate: 11, severe: 4 },
-    { month: 'May', normal: 76, moderate: 10, severe: 3 },
-    { month: 'Jun', normal: 78, moderate: 9, severe: 2 },
+    { month: "Jan", normal: 65, moderate: 15, severe: 9 },
+    { month: "Feb", normal: 68, moderate: 13, severe: 8 },
+    { month: "Mar", normal: 71, moderate: 12, severe: 6 },
+    { month: "Apr", normal: 74, moderate: 11, severe: 4 },
+    { month: "May", normal: 76, moderate: 10, severe: 3 },
+    { month: "Jun", normal: 78, moderate: 9, severe: 2 },
   ];
 
   const malnutritionDistribution = [
-    { name: 'Normal', value: 78, color: '#10B981' },
-    { name: 'Moderate', value: 9, color: '#F59E0B' },
-    { name: 'Severe', value: 2, color: '#EF4444' },
+    { name: "Normal", value: 78, color: "#10B981" },
+    { name: "Moderate", value: 9, color: "#F59E0B" },
+    { name: "Severe", value: 2, color: "#EF4444" },
   ];
 
   const emergencyAlerts = [
     {
-      id: '1',
-      childName: 'Uwimana Grace',
-      parentName: 'Marie Uwimana',
-      village: 'Rugarama',
-      severity: 'severe',
-      condition: 'Severe Wasting',
-      lastMeasurement: '2024-01-15',
-      status: 'pending',
+      id: "1",
+      childName: "Uwimana Grace",
+      parentName: "Marie Uwimana",
+      village: "Rugarama",
+      severity: "severe",
+      condition: "Severe Wasting",
+      lastMeasurement: "2024-01-15",
+      status: "pending",
     },
     {
-      id: '2',
-      childName: 'Mugabo Eric',
-      parentName: 'Jean Mugabo',
-      village: 'Kinyababa',
-      severity: 'moderate',
-      condition: 'Moderate Stunting',
-      lastMeasurement: '2024-01-14',
-      status: 'in_progress',
+      id: "2",
+      childName: "Mugabo Eric",
+      parentName: "Jean Mugabo",
+      village: "Kinyababa",
+      severity: "moderate",
+      condition: "Moderate Stunting",
+      lastMeasurement: "2024-01-14",
+      status: "in_progress",
     },
     {
-      id: '3',
-      childName: 'Ishimwe Alice',
-      parentName: 'Rose Ishimwe',
-      village: 'Rugarama',
-      severity: 'severe',
-      condition: 'MUAC Critical',
-      lastMeasurement: '2024-01-13',
-      status: 'resolved',
+      id: "3",
+      childName: "Ishimwe Alice",
+      parentName: "Rose Ishimwe",
+      village: "Rugarama",
+      severity: "severe",
+      condition: "MUAC Critical",
+      lastMeasurement: "2024-01-13",
+      status: "resolved",
     },
   ];
 
   const recentActivities = [
     {
-      id: '1',
-      action: 'New family registered',
-      user: 'Nkurunziza Family',
-      location: 'Rugarama Village',
-      timestamp: '2 hours ago',
-      type: 'registration',
+      id: "1",
+      action: "New family registered",
+      user: "Nkurunziza Family",
+      location: "Rugarama Village",
+      timestamp: "2 hours ago",
+      type: "registration",
     },
     {
-      id: '2',
-      action: 'Measurement added',
-      user: 'Marie Uwimana',
-      location: 'Kinyababa Village',
-      timestamp: '4 hours ago',
-      type: 'measurement',
+      id: "2",
+      action: "Measurement added",
+      user: "Marie Uwimana",
+      location: "Kinyababa Village",
+      timestamp: "4 hours ago",
+      type: "measurement",
     },
     {
-      id: '3',
-      action: 'Alert resolved',
-      user: 'Health Advisor',
-      location: 'Rugarama Village',
-      timestamp: '1 day ago',
-      type: 'alert',
+      id: "3",
+      action: "Alert resolved",
+      user: "Health Advisor",
+      location: "Rugarama Village",
+      timestamp: "1 day ago",
+      type: "alert",
     },
   ];
 
   const topPerformingVillages = [
-    { name: 'Rugarama', healthyChildren: 95, totalChildren: 98, percentage: 97 },
-    { name: 'Kinyababa', healthyChildren: 42, totalChildren: 45, percentage: 93 },
-    { name: 'Nyabisindu', healthyChildren: 38, totalChildren: 42, percentage: 90 },
-    { name: 'Gaseke', healthyChildren: 35, totalChildren: 40, percentage: 88 },
-    { name: 'Rwimbogo', healthyChildren: 32, totalChildren: 38, percentage: 84 },
+    {
+      name: "Rugarama",
+      healthyChildren: 95,
+      totalChildren: 98,
+      percentage: 97,
+    },
+    {
+      name: "Kinyababa",
+      healthyChildren: 42,
+      totalChildren: 45,
+      percentage: 93,
+    },
+    {
+      name: "Nyabisindu",
+      healthyChildren: 38,
+      totalChildren: 42,
+      percentage: 90,
+    },
+    { name: "Gaseke", healthyChildren: 35, totalChildren: 40, percentage: 88 },
+    {
+      name: "Rwimbogo",
+      healthyChildren: 32,
+      totalChildren: 38,
+      percentage: 84,
+    },
   ];
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'severe': return 'text-red-700 bg-red-100 dark:bg-red-900 dark:text-red-200';
-      case 'moderate': return 'text-yellow-700 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-200';
-      default: return 'text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-200';
+      case "severe":
+        return "text-red-700 bg-red-100 dark:bg-red-900 dark:text-red-200";
+      case "moderate":
+        return "text-yellow-700 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-200";
+      default:
+        return "text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-200";
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'text-red-700 bg-red-100 dark:bg-red-900 dark:text-red-200';
-      case 'in_progress': return 'text-yellow-700 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-200';
-      case 'resolved': return 'text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-200';
-      default: return 'text-gray-700 bg-gray-100 dark:bg-gray-900 dark:text-gray-200';
+      case "pending":
+        return "text-red-700 bg-red-100 dark:bg-red-900 dark:text-red-200";
+      case "in_progress":
+        return "text-yellow-700 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-200";
+      case "resolved":
+        return "text-green-700 bg-green-100 dark:bg-green-900 dark:text-green-200";
+      default:
+        return "text-gray-700 bg-gray-100 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
   const stats = [
     {
-      label: 'Total Families',
+      label: "Total Families",
       value: areaStats.totalFamilies,
       icon: <Users className="w-6 h-6" />,
-      color: 'text-blue-600 bg-blue-100 dark:bg-blue-900 dark:text-blue-300',
-      change: '+12%',
+      color: "text-blue-600 bg-blue-100 dark:bg-blue-900 dark:text-blue-300",
+      change: "+12%",
     },
     {
-      label: 'Children Monitored',
+      label: "Children Monitored",
       value: areaStats.totalChildren,
       icon: <Activity className="w-6 h-6" />,
-      color: 'text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300',
-      change: '+8%',
+      color:
+        "text-green-600 bg-green-100 dark:bg-green-900 dark:text-green-300",
+      change: "+8%",
     },
     {
-      label: 'At Risk',
+      label: "At Risk",
       value: areaStats.atRiskChildren,
       icon: <AlertTriangle className="w-6 h-6" />,
-      color: 'text-orange-600 bg-orange-100 dark:bg-orange-900 dark:text-orange-300',
-      change: '-15%',
+      color:
+        "text-orange-600 bg-orange-100 dark:bg-orange-900 dark:text-orange-300",
+      change: "-15%",
     },
     {
-      label: 'Severe Alerts',
+      label: "Severe Alerts",
       value: areaStats.severeAlerts,
       icon: <Bell className="w-6 h-6" />,
-      color: 'text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-300',
-      change: '-25%',
+      color: "text-red-600 bg-red-100 dark:bg-red-900 dark:text-red-300",
+      change: "-25%",
     },
   ];
 
@@ -161,11 +215,13 @@ export function HealthAdvisorDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                Health Advisor Dashboard
+                {t("healthAdvice")}
               </h1>
               <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                 <MapPin className="w-4 h-4" />
-                <span>Karangazi Sector • {state.user?.assignedArea?.cell} Cell</span>
+                <span>
+                  Karangazi Sector • {state.user?.assignedArea?.cell} Cell
+                </span>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -258,9 +314,24 @@ export function HealthAdvisorDashboard() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="normal" stroke="#10B981" strokeWidth={2} />
-                <Line type="monotone" dataKey="moderate" stroke="#F59E0B" strokeWidth={2} />
-                <Line type="monotone" dataKey="severe" stroke="#EF4444" strokeWidth={2} />
+                <Line
+                  type="monotone"
+                  dataKey="normal"
+                  stroke="#10B981"
+                  strokeWidth={2}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="moderate"
+                  stroke="#F59E0B"
+                  strokeWidth={2}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="severe"
+                  stroke="#EF4444"
+                  strokeWidth={2}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -277,7 +348,9 @@ export function HealthAdvisorDashboard() {
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) =>
+                    `${name} ${(percent * 100).toFixed(0)}%`
+                  }
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
@@ -301,7 +374,11 @@ export function HealthAdvisorDashboard() {
                 Emergency Alerts
               </h3>
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                {emergencyAlerts.filter(alert => alert.status === 'pending').length} Pending
+                {
+                  emergencyAlerts.filter((alert) => alert.status === "pending")
+                    .length
+                }{" "}
+                Pending
               </span>
             </div>
             <div className="space-y-4">
@@ -316,7 +393,11 @@ export function HealthAdvisorDashboard() {
                         <h4 className="font-medium text-gray-900 dark:text-white">
                           {alert.childName}
                         </h4>
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(alert.severity)}`}>
+                        <span
+                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(
+                            alert.severity
+                          )}`}
+                        >
                           {alert.severity}
                         </span>
                       </div>
@@ -330,8 +411,12 @@ export function HealthAdvisorDashboard() {
                         <span className="text-xs text-gray-500 dark:text-gray-400">
                           Last measured: {alert.lastMeasurement}
                         </span>
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(alert.status)}`}>
-                          {alert.status.replace('_', ' ')}
+                        <span
+                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
+                            alert.status
+                          )}`}
+                        >
+                          {alert.status.replace("_", " ")}
                         </span>
                       </div>
                     </div>
@@ -353,12 +438,17 @@ export function HealthAdvisorDashboard() {
                   className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
                 >
                   <div className="flex items-center space-x-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                      index === 0 ? 'bg-yellow-100 text-yellow-800' :
-                      index === 1 ? 'bg-gray-100 text-gray-800' :
-                      index === 2 ? 'bg-orange-100 text-orange-800' :
-                      'bg-blue-100 text-blue-800'
-                    }`}>
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                        index === 0
+                          ? "bg-yellow-100 text-yellow-800"
+                          : index === 1
+                          ? "bg-gray-100 text-gray-800"
+                          : index === 2
+                          ? "bg-orange-100 text-orange-800"
+                          : "bg-blue-100 text-blue-800"
+                      }`}
+                    >
                       {index + 1}
                     </div>
                     <div>
@@ -366,7 +456,8 @@ export function HealthAdvisorDashboard() {
                         {village.name}
                       </h4>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {village.healthyChildren}/{village.totalChildren} children
+                        {village.healthyChildren}/{village.totalChildren}{" "}
+                        children
                       </p>
                     </div>
                   </div>
@@ -398,14 +489,22 @@ export function HealthAdvisorDashboard() {
                 key={activity.id}
                 className="flex items-center space-x-4 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  activity.type === 'registration' ? 'bg-blue-100 text-blue-600' :
-                  activity.type === 'measurement' ? 'bg-green-100 text-green-600' :
-                  'bg-orange-100 text-orange-600'
-                }`}>
-                  {activity.type === 'registration' ? <Users className="w-5 h-5" /> :
-                   activity.type === 'measurement' ? <Activity className="w-5 h-5" /> :
-                   <Bell className="w-5 h-5" />}
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    activity.type === "registration"
+                      ? "bg-blue-100 text-blue-600"
+                      : activity.type === "measurement"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-orange-100 text-orange-600"
+                  }`}
+                >
+                  {activity.type === "registration" ? (
+                    <Users className="w-5 h-5" />
+                  ) : activity.type === "measurement" ? (
+                    <Activity className="w-5 h-5" />
+                  ) : (
+                    <Bell className="w-5 h-5" />
+                  )}
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900 dark:text-white">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { ChevronLeft, ChevronRight, User, MapPin, Baby, Ruler, CheckCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/translations';

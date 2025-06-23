@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { LandingPage } from './components/LandingPage';
 import { RegistrationForm } from './components/RegistrationForm';
@@ -7,6 +7,7 @@ import { HealthAdvisorDashboard } from './components/HealthAdvisorDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Navbar } from './components/Navbar';
 import { Parent, User } from './types';
+
 import { 
   mockUser, 
   mockChildren, 
