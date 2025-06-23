@@ -29,11 +29,8 @@ import {
 import { useApp } from "../context/AppContext";
 import { useTranslation } from "../utils/tools/translations";
 import { clsx } from "clsx";
-import { IUser } from "../types";
-interface HealthAdvisorDashboardProps {
-  user: IUser;
-}
-export function HealthAdvisorDashboard({user} : HealthAdvisorDashboardProps) {
+
+export function HealthAdvisorDashboard() {
   const { state } = useApp();
   const { t } = useTranslation(state.language);
   const [selectedFilter, setSelectedFilter] = useState("all");

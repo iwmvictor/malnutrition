@@ -66,9 +66,10 @@ export interface IUser {
   id: string;
   roles: string[];
   photo: string;
+  phoneNumber?: string;
 }
 
-export type UserRole = 'parent' | 'health_advisor' | 'village_admin' | 'cell_admin' | 'sector_admin' | 'district_admin' | 'province_admin' | 'ministry_admin';
+export type UserRole = 'MINISTRY' | 'health_advisor' | 'village_admin' | 'cell_admin' | 'sector_admin' | 'district_admin' | 'province_admin' | 'ministry_admin';
 
 export type Language = 'en' | 'rw' | 'fr';
 

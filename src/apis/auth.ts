@@ -1,3 +1,4 @@
+import { IUser } from "../types";
 import {
   ILoginFormData,
   IResetPassword,
@@ -8,20 +9,17 @@ import {
 import { AuthState } from "../types/common.d";
 import api from "./api";
 
-export const login = async (formData: ILoginFormData): Promise<AuthState> => {
+export const login = async (formData: ILoginFormData): Promise<IUser> => {
   const { data } = await api.post("/auth/signin", formData);
-  localStorage.setItem("userData", JSON.stringify(data.data));
   return {
-    ...data,
     token: data.data.token,
     roles: data.data.roles || [],
-    user: {
-      id: data.data.id,
-      firstName: data.data.firstName,
-      lastName: data.data.lastName,
-      email: data.data.email,
-      photo: data.data.photo,
-    },
+    firstName: data.data.firstName,
+    lastName: data.data.lastName,
+    email: data.data.email,
+    id: data.data.id,
+    photo: data.data.photo,
+    phoneNumber: data.data.phoneNumber || undefined,
   };
 };
 

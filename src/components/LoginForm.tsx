@@ -13,7 +13,7 @@ import PasswordField from "../components/common/form/PasswordField";
 import TextField from './common/form/TextField';
 
 const LoginForm = () => {
-  const { state } = useApp();
+  const { state, dispatch } = useApp();
   const { t } = useTranslation(state.language);
   const signIn = useSignIn();
   const navigate = useNavigate();
@@ -31,6 +31,22 @@ const LoginForm = () => {
     loginMutation.mutate(data, {
       onSuccess(response) {
         const { token, roles = [], ...authState } = response;
+
+        // Ensure the payload matches the IUser type
+        const userPayload = {
+          token,
+          roles,
+          firstName: authState.firstName,
+          lastName: authState.lastName,
+          email: authState.email,
+          id: authState.id,
+          photo: authState.photo,
+          phoneNumber: authState.phoneNumber || undefined,
+        };
+
+        // Update global state with user data
+        dispatch({ type: "SET_USER", payload: userPayload });
+
         signIn({
           token: token,
           expiresIn: 3600,

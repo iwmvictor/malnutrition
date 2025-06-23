@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { User, Language, Theme, Child, Parent, Notification } from '../types';
+import { IUser, Language, Theme, Child, Parent, Notification } from '../types';
 
 interface AppState {
-  user: User | null;
+  user: IUser | null;
   language: Language;
   theme: Theme;
   notifications: Notification[];
@@ -13,7 +13,7 @@ interface AppState {
 }
 
 type AppAction =
-  | { type: 'SET_USER'; payload: User | null }
+  | { type: 'SET_USER'; payload: IUser | null }
   | { type: 'SET_LANGUAGE'; payload: Language }
   | { type: 'SET_THEME'; payload: Theme }
   | { type: 'SET_NOTIFICATIONS'; payload: Notification[] }
@@ -42,7 +42,7 @@ const AppContext = createContext<{
 function appReducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
     case 'SET_USER':
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload as IUser };
     case 'SET_LANGUAGE':
       return { ...state, language: action.payload };
     case 'SET_THEME':

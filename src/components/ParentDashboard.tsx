@@ -3,13 +3,10 @@ import { Plus, TrendingUp, Users, AlertCircle, Heart, Target } from 'lucide-reac
 import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/tools/translations';
 import { ChildCard } from './ChildCard';
-import { Child, IUser } from '../types';
+import { Child } from '../types';
 import { generateNutritionTip, getOverallRiskLevel } from '../utils/tools/aiInsights';
 
-interface ParentDashboardProps {
-  user: IUser
-}
-export function ParentDashboard({user} : ParentDashboardProps) {
+export function ParentDashboard() {
   const { state } = useApp();
   const { t } = useTranslation(state.language);
   const [showAddMeasurement, setShowAddMeasurement] = useState(false);
