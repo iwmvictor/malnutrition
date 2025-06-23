@@ -2,17 +2,21 @@ import { Globe, ArrowRight, Shield, Users, TrendingUp, Award, LucideMoon, Lucide
 import { useApp } from '../context/AppContext';
 import { useTranslation } from '../utils/tools/translations';
 import { Language } from '../types';
-import { LoginForm } from './LoginForm';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-type AppView = 'landing' | 'registration' | 'dashboard';
 export function LandingPage() {
   const { state, dispatch } = useApp();
   const { t } = useTranslation(state.language);
-   const [currentView, setCurrentView] = useState<AppView>('landing');
+
+  useEffect(() => {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      console.log("this is from landing page ==> User Data:", JSON.parse(userData));
+    }
+  }, []);
 
   const handleGetStarted = () => {
-    setCurrentView('registration');
+    window.location.href = '/auth/login';
   };
   const handleLanguageChange = (language: Language) => {
     dispatch({ type: 'SET_LANGUAGE', payload: language });
@@ -98,9 +102,6 @@ export function LandingPage() {
           </div>
         </div>
       </header>
-      {currentView === 'registration' && (
-        <LoginForm  />
-      )}
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

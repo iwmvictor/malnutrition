@@ -8,7 +8,7 @@ const Providers = () => {
   return (
 
       <QueryClientProvider client={clientQuery}>
-        <AuthProvider authType='cookie' authName='_auth'>
+        <AuthProvider authType="cookie" authName="_auth">
           <RoutesProvider />
         </AuthProvider>
         <ReactQueryDevtools initialIsOpen={false} />

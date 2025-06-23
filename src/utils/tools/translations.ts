@@ -45,6 +45,14 @@ export const translations = {
     previous: "Previous",
     submit: "Submit",
     loading: "Loading...",
+
+    // Login Page
+    loginTitle: "Sign In",
+    loginSubtitle: "Enter your email address and password below to authenticate",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    forgotPassword: "Forgot your password?",
+    signInButton: "Sign In",
   },
   rw: {
     // Navigation
@@ -90,6 +98,14 @@ export const translations = {
     previous: "Subira",
     submit: "Ohereza",
     loading: "Biragendanwa...",
+
+    // Login Page
+    loginTitle: "Injira",
+    loginSubtitle: "Injiza aderesi yawe ya email n'ijambo ry'ibanga hasi kugirango winjire",
+    emailLabel: "Imeyili",
+    passwordLabel: "Ijambo ry'Ibanga",
+    forgotPassword: "Wibagiwe ijambo ry'ibanga?",
+    signInButton: "Injira",
   },
   fr: {
     // Navigation
@@ -134,6 +150,14 @@ export const translations = {
     previous: "Précédent",
     submit: "Soumettre",
     loading: "Chargement...",
+
+    // Login Page
+    loginTitle: "Connexion",
+    loginSubtitle: "Entrez votre adresse e-mail et votre mot de passe ci-dessous pour vous authentifier",
+    emailLabel: "E-mail",
+    passwordLabel: "Mot de passe",
+    forgotPassword: "Mot de passe oublié ?",
+    signInButton: "Se Connecter",
   },
 };
 

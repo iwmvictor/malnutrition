@@ -6,11 +6,23 @@ import { HealthAdvisorDashboard } from "../../components/HealthAdvisorDashboard"
 import { AdminDashboard } from "../../components/AdminDashboard";
 import ErrorPage from "../../pages/ErrorPage";
 import NotFound from "../../pages/NotFound";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/Auth";
+import LoginForm from "../../components/LoginForm";
 
 const RoutesProvider = () => {
-  const { userProfile } = useContext(AuthContext);
+  const { userProfile, setUserProfile } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!userProfile) {
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        setUserProfile(JSON.parse(storedUserData));
+      }
+    }
+  }, [userProfile, setUserProfile]);
+
+  console.log("this is from routesProvider ==> userProfile:", userProfile);
 
   const renderDashboard = () => {
     if (!userProfile) return null;
@@ -43,6 +55,17 @@ const RoutesProvider = () => {
       path: "/dashboard",
       element: <AdminRoute>{renderDashboard()}</AdminRoute>,
       errorElement: <ErrorPage />,
+    },
+    {
+      path: "/auth",
+      element: <LoginForm />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "login",
+          element: <LoginForm />,
+        },
+      ],
     },
     {
       path: "*",
