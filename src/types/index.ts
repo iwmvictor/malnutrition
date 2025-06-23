@@ -59,13 +59,13 @@ export interface Address {
 }
 
 export interface User {
-  id: string;
+  token: string;
   firstName: string;
   lastName: string;
   email: string;
-  role: UserRole;
-  address?: Address;
-  assignedArea?: Address;
+  id: string;
+  roles: string[];
+  photo: string;
 }
 
 export type UserRole = 'parent' | 'health_advisor' | 'village_admin' | 'cell_admin' | 'sector_admin' | 'district_admin' | 'province_admin' | 'ministry_admin';

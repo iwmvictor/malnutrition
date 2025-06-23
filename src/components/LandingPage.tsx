@@ -8,13 +8,6 @@ export function LandingPage() {
   const { state, dispatch } = useApp();
   const { t } = useTranslation(state.language);
 
-  useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    if (userData) {
-      console.log("this is from landing page ==> User Data:", JSON.parse(userData));
-    }
-  }, []);
-
   const handleGetStarted = () => {
     window.location.href = '/auth/login';
   };
