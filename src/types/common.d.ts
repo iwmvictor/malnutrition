@@ -7,6 +7,11 @@ export interface IUser {
   password: string;
   createdAt: Date;
   phoneNumber: string;
+  province: "string";
+  district: "string";
+  sector: "string";
+  cell: "string";
+  village: "string";
   updatedAt: Date;
   otp: string | null;
   otpExpiresAt: Date | null;
@@ -14,11 +19,7 @@ export interface IUser {
   role: string;
 }
 
-export interface IUserRequest
-  extends Omit<
-  IUser,
-    "id" 
-  > {
+export interface IUserRequest extends Omit<IUser, "id"> {
   id?: string;
 }
 export interface IPermission {

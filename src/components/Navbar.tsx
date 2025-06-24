@@ -232,16 +232,34 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {showMobileMenu && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-700">
+          <div className="md:hidden px-3 absolute bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm w-full left-0 border-t border-gray-200 dark:border-gray-700">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              <div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center bg-gray-400 dark:bg-gray-700 text-sm font-semibold text-white select-none">
+                    {state.user?.photo ? (
+                      <img
+                        src={state.user.photo}
+                        alt="Profile"
+                        className="w-full h-full pointer-events-none object-cover"
+                      />
+                    ) : state.user?.firstName || state.user?.lastName ? (
+                      getInitials(state.user.firstName, state.user.lastName)
+                    ) : (
+                      <User className="w-8 h-8 text-gray-600 dark:text-gray-300" />
+                    )}
+                  </div>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    {state.user?.firstName} {state.user?.lastName}
+                  </span>
+                </div>
+              </div>
               <div className="flex items-center justify-between py-2">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {state.user?.firstName} {state.user?.lastName}
-                </span>
                 <button
                   onClick={handleLogout}
-                  className="p-1 rounded-md text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+                  className="p-1 items-center flex gap-3 mt-3 rounded-md text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
                 >
+                  <span>Logout</span>
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>

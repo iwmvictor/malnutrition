@@ -652,7 +652,7 @@ export function AdminDashboard({ adminLevel }: AdminDashboardProps) {
 
           <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white shadow-xl z-50 overflow-y-auto transition-transform duration-300 rounded-lg">
             <button
-              onClick={() => setRegisterModal(false)}
+              onClick={toggleRegModal}
               className="absolute top-4 right-4 text-gray-600 hover:text-black"
             >
               ✕
@@ -680,7 +680,7 @@ export function AdminDashboard({ adminLevel }: AdminDashboardProps) {
                   const user = await createUser(formData);
                   return true;
                 } catch (error) {
-                  toast.error("❌ Failed to create user.");
+                  toast.error("Failed to create user.");
                   console.error("Create user error:", error);
                 } finally {
                   setIsCreatingUser(false);

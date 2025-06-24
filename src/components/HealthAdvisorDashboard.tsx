@@ -2,20 +2,21 @@ import { useState } from "react";
 import {
   Users,
   AlertTriangle,
-  TrendgUp,
+  // TrendgUp,
   Activity,
-  Filter,
+  // Filter,
   Download,
   Search,
   Bell,
   MapPin,
-  Calendar,
+  // Calendar,
+  Plus,
 } from "lucide-react";
 import {
   LineChart,
   Line,
-  BarChart,
-  Bar,
+  // BarChart,
+  // Bar,
   PieChart,
   Pie,
   Cell,
@@ -28,7 +29,11 @@ import {
 } from "recharts";
 import { useApp } from "../context/AppContext";
 import { useTranslation } from "../utils/tools/translations";
-import { clsx } from "clsx";
+// import { clsx } from "clsx";
+import { Navbar } from "./Navbar";
+import toast from "react-hot-toast";
+import RegistrationForm from "./RegisterForm";
+import { createUser } from "../apis/users";
 
 export function HealthAdvisorDashboard() {
   const { state } = useApp();
@@ -36,6 +41,13 @@ export function HealthAdvisorDashboard() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [dateRange, setDateRange] = useState("30days");
   const [searchTerm, setSearchTerm] = useState("");
+
+  const [registerModal, setRegisterModal] = useState(false);
+  const [isCreatingUser, setIsCreatingUser] = useState(false);
+
+  const toggleRegModal = () => {
+    setRegisterModal(!registerModal);
+  };
 
   // Mock data for health advisor's assigned area
   const areaStats = {
@@ -208,320 +220,375 @@ export function HealthAdvisorDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                {t("healthAdvice")}
-              </h1>
-              <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
-                <MapPin className="w-4 h-4" />
-                <span>
-                  Karangazi Sector • {state.user?.assignedArea?.cell} Cell
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
-                <Download className="w-4 h-4" />
-                <span>Export Report</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    <>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Navbar />
 
-        {/* Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search families or children..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-                />
-              </div>
-              <select
-                value={selectedFilter}
-                onChange={(e) => setSelectedFilter(e.target.value)}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              >
-                <option value="all">All Status</option>
-                <option value="normal">Normal</option>
-                <option value="moderate">Moderate Risk</option>
-                <option value="severe">Severe Risk</option>
-              </select>
-            </div>
-            <div className="flex items-center space-x-4">
-              <select
-                value={dateRange}
-                onChange={(e) => setDateRange(e.target.value)}
-                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
-              >
-                <option value="7days">Last 7 days</option>
-                <option value="30days">Last 30 days</option>
-                <option value="90days">Last 3 months</option>
-                <option value="1year">Last year</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                    {stat.label}
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                    {stat.value}
-                  </p>
-                  <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                    {stat.change} from last month
-                  </p>
-                </div>
-                <div className={`p-3 rounded-lg ${stat.color}`}>
-                  {stat.icon}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header */}
+          <div className="mb-8">
+            <div className="flex items-center gap-6 flex-wrap justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                  {t("healthAdvice")}
+                </h1>
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+                  <MapPin className="w-4 h-4" />
+                  <span>Karangazi Sector • Cell</span>
                 </div>
               </div>
+              <div className="flex gap-3 items-center space-x-4">
+                <button
+                  onClick={toggleRegModal}
+                  className="inline-flex items-center space-x-2 px-4 py-2 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Register Parent</span>
+                </button>
+                <button className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                  <Download className="w-4 h-4" />
+                  <span>Export Report</span>
+                </button>
+              </div>
             </div>
-          ))}
-        </div>
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Growth Trends */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-              Nutrition Status Trends
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={growthTrendData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="normal"
-                  stroke="#10B981"
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="moderate"
-                  stroke="#F59E0B"
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="severe"
-                  stroke="#EF4444"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
           </div>
 
-          {/* Malnutrition Distribution */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-              Current Status Distribution
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie
-                  data={malnutritionDistribution}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
-                  }
-                  outerRadius={80}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {malnutritionDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Emergency Alerts & Village Rankings */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Emergency Alerts */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Emergency Alerts
-              </h3>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                {
-                  emergencyAlerts.filter((alert) => alert.status === "pending")
-                    .length
-                }{" "}
-                Pending
-              </span>
-            </div>
-            <div className="space-y-4">
-              {emergencyAlerts.map((alert) => (
-                <div
-                  key={alert.id}
-                  className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <h4 className="font-medium text-gray-900 dark:text-white">
-                          {alert.childName}
-                        </h4>
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(
-                            alert.severity
-                          )}`}
-                        >
-                          {alert.severity}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                        Parent: {alert.parentName} • {alert.village}
-                      </p>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
-                        {alert.condition}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          Last measured: {alert.lastMeasurement}
-                        </span>
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
-                            alert.status
-                          )}`}
-                        >
-                          {alert.status.replace("_", " ")}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+          {/* Filters */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <input
+                    type="text"
+                    placeholder="Search families or children..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                  />
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Top Performing Villages */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-              Village Performance Rankings
-            </h3>
-            <div className="space-y-4">
-              {topPerformingVillages.map((village, index) => (
-                <div
-                  key={village.name}
-                  className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
+                <select
+                  value={selectedFilter}
+                  onChange={(e) => setSelectedFilter(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
                 >
-                  <div className="flex items-center space-x-3">
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                        index === 0
-                          ? "bg-yellow-100 text-yellow-800"
-                          : index === 1
-                          ? "bg-gray-100 text-gray-800"
-                          : index === 2
-                          ? "bg-orange-100 text-orange-800"
-                          : "bg-blue-100 text-blue-800"
-                      }`}
-                    >
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-gray-900 dark:text-white">
-                        {village.name}
-                      </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {village.healthyChildren}/{village.totalChildren}{" "}
-                        children
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-gray-900 dark:text-white">
-                      {village.percentage}%
-                    </div>
-                    <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="bg-green-500 h-2 rounded-full"
-                        style={{ width: `${village.percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  <option value="all">All Status</option>
+                  <option value="normal">Normal</option>
+                  <option value="moderate">Moderate Risk</option>
+                  <option value="severe">Severe Risk</option>
+                </select>
+              </div>
+              <div className="flex items-center space-x-4">
+                <select
+                  value={dateRange}
+                  onChange={(e) => setDateRange(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="7days">Last 7 days</option>
+                  <option value="30days">Last 30 days</option>
+                  <option value="90days">Last 3 months</option>
+                  <option value="1year">Last year</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Recent Activities */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
-            Recent Activities
-          </h3>
-          <div className="space-y-4">
-            {recentActivities.map((activity) => (
+          {/* Statistics Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            {stats.map((stat, index) => (
               <div
-                key={activity.id}
-                className="flex items-center space-x-4 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                key={index}
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6"
               >
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                    activity.type === "registration"
-                      ? "bg-blue-100 text-blue-600"
-                      : activity.type === "measurement"
-                      ? "bg-green-100 text-green-600"
-                      : "bg-orange-100 text-orange-600"
-                  }`}
-                >
-                  {activity.type === "registration" ? (
-                    <Users className="w-5 h-5" />
-                  ) : activity.type === "measurement" ? (
-                    <Activity className="w-5 h-5" />
-                  ) : (
-                    <Bell className="w-5 h-5" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">
-                    {activity.action}
-                  </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    {activity.user} • {activity.location}
-                  </p>
-                </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  {activity.timestamp}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+                      {stat.value}
+                    </p>
+                    <p className="text-sm text-green-600 dark:text-green-400 mt-1">
+                      {stat.change} from last month
+                    </p>
+                  </div>
+                  <div className={`p-3 rounded-lg ${stat.color}`}>
+                    {stat.icon}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* Charts Section */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Growth Trends */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+                Nutrition Status Trends
+              </h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={growthTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="normal"
+                    stroke="#10B981"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="moderate"
+                    stroke="#F59E0B"
+                    strokeWidth={2}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="severe"
+                    stroke="#EF4444"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Malnutrition Distribution */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+                Current Status Distribution
+              </h3>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={malnutritionDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) =>
+                      `${name} ${(percent * 100).toFixed(0)}%`
+                    }
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {malnutritionDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Emergency Alerts & Village Rankings */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            {/* Emergency Alerts */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  Emergency Alerts
+                </h3>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                  {
+                    emergencyAlerts.filter(
+                      (alert) => alert.status === "pending"
+                    ).length
+                  }{" "}
+                  Pending
+                </span>
+              </div>
+              <div className="space-y-4">
+                {emergencyAlerts.map((alert) => (
+                  <div
+                    key={alert.id}
+                    className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <h4 className="font-medium text-gray-900 dark:text-white">
+                            {alert.childName}
+                          </h4>
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getSeverityColor(
+                              alert.severity
+                            )}`}
+                          >
+                            {alert.severity}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                          Parent: {alert.parentName} • {alert.village}
+                        </p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white mb-2">
+                          {alert.condition}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            Last measured: {alert.lastMeasurement}
+                          </span>
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(
+                              alert.status
+                            )}`}
+                          >
+                            {alert.status.replace("_", " ")}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Performing Villages */}
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+                Village Performance Rankings
+              </h3>
+              <div className="space-y-4">
+                {topPerformingVillages.map((village, index) => (
+                  <div
+                    key={village.name}
+                    className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-600 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                          index === 0
+                            ? "bg-yellow-100 text-yellow-800"
+                            : index === 1
+                            ? "bg-gray-100 text-gray-800"
+                            : index === 2
+                            ? "bg-orange-100 text-orange-800"
+                            : "bg-blue-100 text-blue-800"
+                        }`}
+                      >
+                        {index + 1}
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 dark:text-white">
+                          {village.name}
+                        </h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          {village.healthyChildren}/{village.totalChildren}{" "}
+                          children
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-gray-900 dark:text-white">
+                        {village.percentage}%
+                      </div>
+                      <div className="w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div
+                          className="bg-green-500 h-2 rounded-full"
+                          style={{ width: `${village.percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Recent Activities */}
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+              Recent Activities
+            </h3>
+            <div className="space-y-4">
+              {recentActivities.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center space-x-4 p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      activity.type === "registration"
+                        ? "bg-blue-100 text-blue-600"
+                        : activity.type === "measurement"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-orange-100 text-orange-600"
+                    }`}
+                  >
+                    {activity.type === "registration" ? (
+                      <Users className="w-5 h-5" />
+                    ) : activity.type === "measurement" ? (
+                      <Activity className="w-5 h-5" />
+                    ) : (
+                      <Bell className="w-5 h-5" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      {activity.action}
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      {activity.user} • {activity.location}
+                    </p>
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    {activity.timestamp}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      {registerModal && (
+        <>
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" />
+
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-white shadow-xl z-50 overflow-y-auto transition-transform duration-300 rounded-lg">
+            <button
+              onClick={toggleRegModal}
+              className="absolute top-4 right-4 text-gray-600 hover:text-black"
+            >
+              ✕
+            </button>
+
+            <RegistrationForm
+              currentUserRole="VILLAGE"
+              isSubmitting={isCreatingUser}
+              onSuccess={() => {
+                setRegisterModal(false);
+                toast.success("User created successfully");
+              }}
+              onSubmit={async (data) => {
+                try {
+                  setIsCreatingUser(true);
+
+                  const formData = new FormData();
+
+                  for (const key in data) {
+                    if (data[key]) {
+                      formData.append(key, data[key]);
+                    }
+                  }
+
+                  const user = await createUser(formData);
+                  return true;
+                } catch (error) {
+                  toast.error("Failed to create user.");
+                  console.error("Create user error:", error);
+                } finally {
+                  setIsCreatingUser(false);
+                }
+              }}
+            />
+          </div>
+        </>
+      )}
+    </>
   );
 }
