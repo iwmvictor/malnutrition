@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminRoute from "./AuthContextProvider";
-import { LandingPage } from "../../components/LandingPage";
+// import { LandingPage } from "../../components/LandingPage";
 import { ParentDashboard } from "../../components/ParentDashboard";
 import { HealthAdvisorDashboard } from "../../components/HealthAdvisorDashboard";
 import { AdminDashboard } from "../../components/AdminDashboard";
@@ -8,6 +8,7 @@ import ErrorPage from "../../pages/ErrorPage";
 import NotFound from "../../pages/NotFound";
 import LoginForm from "../../components/LoginForm";
 import { useApp } from "../../context/AppContext";
+import LandingHome from "../../components/Landing";
 
 const RoutesProvider = () => {
   const { state } = useApp();
@@ -37,7 +38,7 @@ const RoutesProvider = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LandingPage />,
+      element: <LandingHome />,
       errorElement: <ErrorPage />,
     },
     {

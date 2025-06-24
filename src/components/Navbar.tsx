@@ -27,25 +27,32 @@ export function Navbar() {
     dispatch({ type: "SET_USER", payload: null });
     dispatch({ type: "SET_AUTHENTICATED", payload: false });
     dispatch({ type: "SET_CURRENT_PARENT", payload: null });
-    window.location.href = "/auth/login"; // Redirect to login page
+    window.location.href = "/";
   };
 
   const unreadCount = state.notifications.filter((n) => !n.read).length;
 
   const getRoleColor = (role: string) => {
     const colors = {
-      parent: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
-      health_advisor:
+      PARENT: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
+      VILLAGE:
         "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
-      village_admin:
-        "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
-      ministry_admin:
-        "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
+      CELL: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200",
+      SECTOR: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
+      DISTRICT: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
+      MINISTRY: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
     };
     return (
       colors[role as keyof typeof colors] ||
       "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
     );
+  };
+
+  const getInitials = (firstName?: string, lastName?: string) => {
+    if (!firstName && !lastName) return "";
+    const first = firstName?.[0] || "";
+    const last = lastName?.split(" ")[0]?.[0] || ""; // Only take first word from lastName
+    return (first + last).toUpperCase();
   };
 
   return (
@@ -59,7 +66,7 @@ export function Navbar() {
                 <span className="text-white font-bold text-sm">BA</span>
               </div>
               <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">
-                Buzima App
+                {t("Buzima App")}
               </span>
             </div>
           </div>
@@ -178,11 +185,26 @@ export function Navbar() {
 
             {/* User Menu */}
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+              <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center bg-gray-400 dark:bg-gray-700 text-sm font-semibold text-white select-none">
+                {state.user?.photo ? (
+                  <img
+                    src={state.user.photo}
+                    alt="Profile"
+                    className="w-full h-full pointer-events-none object-cover"
+                  />
+                ) : state.user?.firstName || state.user?.lastName ? (
+                  getInitials(state.user.firstName, state.user.lastName)
+                ) : (
+                  <User className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                )}
               </div>
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                {state.user?.firstName} {state.user?.lastName}
+                {state.user?.firstName}{" "}
+                {state.user?.lastName
+                  ?.split(" ")
+                  .map((word) => word[0])
+                  .join("")
+                  .toUpperCase() + "."}
               </span>
               <button
                 onClick={handleLogout}
