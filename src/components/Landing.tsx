@@ -248,7 +248,7 @@ const LandingHome = () => {
               <div className="relative">
                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
                   <img
-                    src="https://images.pexels.com/photos/6627374/pexels-photo-6627374.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                    src="https://www.afro.who.int/sites/default/files/inline-images/WhatsApp%20Image%202024-06-06%20at%2012.47.24%20PM%20%282%29.jpeg"
                     alt="Healthcare worker monitoring child nutrition"
                     className="w-full h-96 object-cover"
                   />
@@ -328,7 +328,7 @@ const LandingHome = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative">
                 <img
-                  src="https://images.pexels.com/photos/6129507/pexels-photo-6129507.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                  src="https://www.afro.who.int/sites/default/files/inline-images/254A5063.JPG"
                   alt="Medical professional using tablet for patient monitoring"
                   className="rounded-3xl shadow-2xl w-full h-96 object-cover"
                 />
@@ -537,16 +537,16 @@ const LandingHome = () => {
                 </p>
                 <div className="flex items-center space-x-4">
                   <img
-                    src="https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=100"
-                    alt="Dr. Sarah Johnson"
+                    src="https://www.afro.who.int/sites/default/files/styles/medium/public/2024-06/254A5054.JPG?itok=iyyKPkt4"
+                    alt="Dr. Sarah Hakizimana"
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>
                     <div className="font-semibold text-gray-900">
-                      Dr. Sarah Johnson
+                      Dr. Kalisa Anne
                     </div>
                     <div className="text-gray-600">
-                      Regional Health Director, East Africa
+                      Health Advisor, Nyabihu District
                     </div>
                     <div className="flex text-yellow-400 mt-1">
                       {[...Array(5)].map((_, i) => (
@@ -558,7 +558,7 @@ const LandingHome = () => {
               </div>
               <div className="relative">
                 <img
-                  src="https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=1000"
+                  src="https://www.afro.who.int/sites/default/files/inline-images/WhatsApp%20Image%202024-06-06%20at%2012.47.24%20PM%20%281%29.jpeg"
                   alt="Healthcare team using tablets for patient care"
                   className="rounded-3xl shadow-2xl w-full h-96 object-cover"
                 />
@@ -614,7 +614,7 @@ const LandingHome = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+        {/* <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Ready to transform malnutrition care?
@@ -625,14 +625,14 @@ const LandingHome = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
-                Start Free Trial
+                Get Started
               </button>
               <button className="border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-                Schedule Demo
+                Learn more
               </button>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Footer */}
         <footer id="contact" className="bg-gray-900 text-white py-12">
@@ -641,7 +641,7 @@ const LandingHome = () => {
               <div>
                 <div className="flex items-center space-x-2 mb-4">
                   <Activity className="text-blue-400" size={28} />
-                  <span className="text-2xl font-bold">NutriTrack</span>
+                  <span className="text-2xl font-bold">Buzima App</span>
                 </div>
                 <p className="text-gray-400">
                   Empowering healthcare organizations to combat malnutrition
@@ -704,8 +704,8 @@ const LandingHome = () => {
               <div>
                 <h4 className="font-semibold mb-4">Contact</h4>
                 <div className="space-y-2 text-gray-400">
-                  <p>support@nutritrack.org</p>
-                  <p>+1 (555) 123-4567</p>
+                  <p>support@buzima.org</p>
+                  <p>(250) 78-199-6271</p>
                   <p>Available 24/7 for critical support</p>
                   <div className="pt-4">
                     <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
